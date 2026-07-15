@@ -1,5 +1,6 @@
 
-![Uploading Online Store Launch with Device Mockup Facebook Cover 的複本.png…]()
+<img width="1640" height="924" alt="cover" src="https://github.com/user-attachments/assets/908fbd46-cc49-48dd-8452-3e2d8e2d5d54" />
+
 
 # Favorite Modifiers（繁體中文延伸版）
 
