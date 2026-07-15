@@ -14,10 +14,13 @@
 - 加入修改器時**依物件類型過濾**，避免加到不適用的
 - tooltip 顯示各修改器**自己的名稱與說明**，跟隨使用者語系
 
-## 安裝
+## 安裝教學
 
-1. 下載本外掛的 zip（或到 Releases 下載）
-2. Blender → 編輯 > 偏好設定 > 附加元件 > 從磁碟安裝 → 選 zip → 啟用「Favorite Modifiers」
+1. 到本頁右側 **Releases** 下載最新的 `.zip`（不用解壓縮）
+2. 打開 Blender → 上方選單 **編輯 (Edit) › 偏好設定 (Preferences)**
+3. 左側點 **附加元件 (Add-ons)** → 右上角 **從磁碟安裝 (Install from Disk…)**
+4. 選剛剛下載的 `.zip` → 安裝
+5. 在清單中把「Favorite Modifiers」前面的**核取方塊打勾**啟用
 
 ## 使用
 
