@@ -1,6 +1,48 @@
-
 <img width="1640" height="924" alt="cover" src="https://github.com/user-attachments/assets/908fbd46-cc49-48dd-8452-3e2d8e2d5d54" />
 
+# Favorite Modifiers
+
+**English** · [繁體中文](#繁體中文)
+
+A row of **favorite-modifier** quick buttons at the top of Blender's modifier panel — click one to add it. This is a Traditional-Chinese localization of the original, with several added features.
+
+> Original idea and base code from **Oleg Stepanov's** Favorite Modifiers. This is a Traditional-Chinese + extended edition, extended by Zack3D.
+
+## Features
+
+- A row of **favorite-modifier buttons** at the top of the modifier panel — click to add that modifier
+- The favorites list is **grouped by object type** (Mesh / Curve·Text·Surface / Lattice / Grease Pencil)
+- **Right-click a button:** move left / move right / remove
+- The **preferences panel** lets you edit the favorites list per object type, kept **in sync** with the on-screen buttons in real time
+- A **default list** (`defaults.json` ships with the add-on) + save as default / restore default / clear
+- Adding a modifier is **filtered by object type**, so you won't add one that doesn't apply
+- Tooltips show each modifier's **own name and description**, following the user's language
+
+## Installation
+
+1. Download the latest `.zip` from **Releases** on the right (no need to unzip)
+2. Open Blender → top menu **Edit › Preferences**
+3. Click **Add-ons** on the left → **Install from Disk…** (top-right)
+4. Select the `.zip` you downloaded → install
+5. Tick the checkbox next to "Favorite Modifiers" to enable it
+
+## Usage
+
+- Select an object, and the favorite buttons appear at the top of its modifier panel — click to add that modifier
+- When there are no favorites yet, a "press ＋ to add a favorite modifier" prompt is shown
+- **Right-click** a favorite button → move left / move right / remove
+- In Preferences you can edit the list per object type and manage defaults (save as default / restore default / clear)
+
+## Credits & License
+
+Original add-on **Favorite Modifiers** by Oleg Stepanov.
+This is an extended / Traditional-Chinese edition; copyright and license follow the original **GNU GPL**.
+
+---
+
+## 繁體中文
+
+[English ↑](#favorite-modifiers)
 
 # Favorite Modifiers（繁體中文延伸版）
 
