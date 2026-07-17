@@ -43,9 +43,9 @@ from bpy.utils import register_class, unregister_class
 
 bl_info = {
     "name": "Favorite Modifiers",
-    "description": "在修改器介面上方顯示常用修改器的按鈕組合。繁體中文化＋功能延伸版，原始創意來自 Oleg Stepanov 的 Favorite Modifiers。",
+    "description": "A row of favorite-modifier buttons above the modifier panel. Traditional-Chinese + extended edition; original idea from Oleg Stepanov's Favorite Modifiers.",
     "author": "Zack3D (inspired by Oleg Stepanov)",
-    "version": (1, 1, 2),
+    "version": (1, 2, 0),
     "blender": (4, 4, 0),
     "location": "Properties Editor > Modifiers",
     "warning": "",
@@ -53,6 +53,59 @@ bl_info = {
     "support": 'COMMUNITY',
     "category": "Modifiers"
 }
+
+
+# ─────────────────────────────────────────────────────────────
+# 介面翻譯（i18n）：UI 字串用英文當原文，附繁中譯文表，跟隨 Blender 語言。
+#   英文介面 → 英文；繁中／簡中介面 → 都顯示繁體（不出簡體）。
+# 掛在專屬翻譯 context（避免「Clear」「Move」等通用字被 Blender 內建翻譯蓋掉）。
+# 繁中同時掛四代碼：zh_HANT/zh_TW（繁）、zh_HANS/zh_CN（簡也顯示繁）。
+# ─────────────────────────────────────────────────────────────
+I18N_CTX = "FavoriteModifiers"
+
+_ZH = {
+    "Display Style": "顯示樣式",
+    "Icon + Name": "圖示+名稱",
+    "Icon": "圖示",
+    "Object Type": "物件類型",
+    "Mesh": "網格物體",
+    "Curve / Text / Surface": "曲線／文字／曲面",
+    "Lattice": "晶格物體",
+    "Grease Pencil": "蠟筆物體",
+    "(No favorite modifiers yet - start from 'Add Modifier' below)":
+        "（尚無常用修改器，從下面「加入修改器」開始）",
+    "Add Modifier": "加入修改器",
+    "Save as Default": "儲存為預設",
+    "Restore Default": "恢復預設",
+    "Clear": "清空",
+    "Move": "移動",
+    "Remove": "移除",
+    "Add / Remove Favorite Modifier": "新增/移除常用修改器",
+    "Add to Favorite Modifiers": "加入到常用修改器",
+    "Remove from Favorite Modifiers": "從常用修改器移除",
+    "Move Button Left": "左移按鈕",
+    "Move Button Right": "右移按鈕",
+    "Press + to add a favorite modifier": "按 ＋ 加入常用修改器",
+    "Add Favorite Modifier": "加入常用修改器",
+    "Add Favorite Modifier by Search": "加入常用修改器",
+    "Move Favorite Modifier": "移動常用修改器",
+    "Saved as default": "已儲存為預設",
+    "Restored to default": "已恢復成預設",
+    '"%s" does not apply to the current object type': "「%s」不適用於目前的物件類型",
+    "A row of favorite-modifier buttons above the modifier panel. "
+    "Traditional-Chinese + extended edition; original idea from Oleg Stepanov's Favorite Modifiers.":
+        "在修改器介面上方顯示常用修改器的按鈕組合。繁體中文化＋功能延伸版，原始創意來自 Oleg Stepanov 的 Favorite Modifiers。",
+}
+
+_ZH_CTX = {(I18N_CTX, en): zh for en, zh in _ZH.items()}
+translations_dict = {"zh_HANT": _ZH_CTX, "zh_TW": _ZH_CTX,
+                     "zh_HANS": _ZH_CTX, "zh_CN": _ZH_CTX}
+
+
+def _t(msgid):
+    """把英文原文翻成目前介面語言（英文介面回傳原文）。"""
+    return bpy.app.translations.pgettext_iface(msgid, I18N_CTX)
+
 
 
 # ── 預設常用清單（存在外掛資料夾的 defaults.json，會隨外掛一起發佈）──
@@ -126,23 +179,23 @@ class FavoriteModifiersAddonPreferences(AddonPreferences):
     seeded: BoolProperty(default=False)
 
     display_style_items = [
-        ("BUTTONS", "圖示+名稱", "", 1),
-        ("ICONS", "圖示", "", 2),
+        ("BUTTONS", "Icon + Name", "", 1),
+        ("ICONS", "Icon", "", 2),
     ]
 
     display_style: EnumProperty(
-        name="顯示樣式",
+        name="Display Style", translation_context=I18N_CTX,
         items=display_style_items,
         default="ICONS"
     )
 
     edit_type: EnumProperty(
-        name="物件類型",
+        name="Object Type", translation_context=I18N_CTX,
         items=[
-            ('mesh', "網格物體", ""),
-            ('curve', "曲線／文字／曲面", ""),
-            ('lattice', "晶格物體", ""),
-            ('gpencil', "蠟筆物體", ""),
+            ('mesh', "Mesh", ""),
+            ('curve', "Curve / Text / Surface", ""),
+            ('lattice', "Lattice", ""),
+            ('gpencil', "Grease Pencil", ""),
         ],
         default='mesh',
     )
@@ -159,7 +212,7 @@ class FavoriteModifiersAddonPreferences(AddonPreferences):
 
         lst = box.column(align=True)
         if not cur:
-            lst.label(text="（尚無常用修改器，從下面「加入修改器」開始）")
+            lst.label(text=_t("(No favorite modifiers yet - start from 'Add Modifier' below)"), text_ctxt=I18N_CTX)
         for ident in cur:
             mod = find(lambda m: m.identifier == ident, modifiers)
             row = lst.row(align=True)
@@ -177,12 +230,12 @@ class FavoriteModifiersAddonPreferences(AddonPreferences):
             xop.mod_type = ident
 
         box.operator_menu_enum("object.fav_panel_add", "mod_type",
-                               text="加入修改器", icon='ADD')
+                               text=_t("Add Modifier"), text_ctxt=I18N_CTX, icon='ADD')
 
         row = box.row(align=True)
-        row.operator("object.fav_set_default", text="儲存為預設", icon='PINNED')
-        row.operator("object.fav_restore_default", text="恢復預設", icon='LOOP_BACK')
-        row.operator("object.fav_clear", text="清空", icon='TRASH')
+        row.operator("object.fav_set_default", text=_t("Save as Default"), text_ctxt=I18N_CTX, icon='PINNED')
+        row.operator("object.fav_restore_default", text=_t("Restore Default"), text_ctxt=I18N_CTX, icon='LOOP_BACK')
+        row.operator("object.fav_clear", text=_t("Clear"), text_ctxt=I18N_CTX, icon='TRASH')
 
 
 def get_favorite_modifiers(context):
@@ -276,7 +329,8 @@ def _mod_items_edit(self, context):
 class MODIFIER_OT_append_to_favorites(Operator):
     """Add to Favorite Modifiers list (stored in User Preferences)"""
     bl_idname = "object.append_to_favorites"
-    bl_label = "Add to Favorites Modifiers"
+    bl_label = "Add to Favorite Modifiers"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
 
@@ -294,7 +348,8 @@ class MODIFIER_OT_append_to_favorites(Operator):
 class MODIFIER_OT_remove_from_favorites(Operator):
     """Remove from Favorite Modifiers list (stored in User Preferences)"""
     bl_idname = "object.remove_from_favorites"
-    bl_label = "Remove from Favorites Modifiers"
+    bl_label = "Remove from Favorite Modifiers"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
 
@@ -313,6 +368,7 @@ class MODIFIER_OT_add_favorite_modifier(Operator):
     """Add a procedural operation/effect to the active object"""
     bl_idname = "object.add_favorite_modifier"
     bl_label = "Add Favorite Modifier"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
 
@@ -343,7 +399,8 @@ class MODIFIER_OT_add_favorite_modifier(Operator):
 class MODIFIER_OT_add_favorite_via_search(Operator):
     """搜尋並加入常用修改器（常用列末端的「＋」）"""
     bl_idname = "object.add_favorite_search"
-    bl_label = "加入常用修改器"
+    bl_label = "Add Favorite Modifier by Search"
+    bl_translation_context = I18N_CTX
     bl_property = "mod_type"
 
     mod_type: EnumProperty(items=_mod_items_active)
@@ -369,7 +426,8 @@ class MODIFIER_OT_add_favorite_via_search(Operator):
 class MODIFIER_OT_move_favorite(Operator):
     """在常用清單中左移/右移這個修改器（右鍵選單用）"""
     bl_idname = "object.move_favorite_modifier"
-    bl_label = "移動常用修改器"
+    bl_label = "Move Favorite Modifier"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
     direction: StringProperty()  # 'UP'（左移）或 'DOWN'（右移）
@@ -394,7 +452,8 @@ class MODIFIER_OT_move_favorite(Operator):
 class MODIFIER_OT_panel_add(Operator):
     """把修改器加入目前選定物件類型的常用清單"""
     bl_idname = "object.fav_panel_add"
-    bl_label = "加入修改器"
+    bl_label = "Add Modifier"
+    bl_translation_context = I18N_CTX
 
     mod_type: EnumProperty(items=_mod_items_edit)
 
@@ -412,7 +471,8 @@ class MODIFIER_OT_panel_add(Operator):
 class MODIFIER_OT_panel_remove(Operator):
     """從目前選定物件類型的常用清單移除修改器"""
     bl_idname = "object.fav_panel_remove"
-    bl_label = "移除"
+    bl_label = "Remove"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
 
@@ -428,7 +488,8 @@ class MODIFIER_OT_panel_remove(Operator):
 class MODIFIER_OT_panel_move(Operator):
     """在常用清單中上移/下移修改器（面板用）"""
     bl_idname = "object.fav_panel_move"
-    bl_label = "移動"
+    bl_label = "Move"
+    bl_translation_context = I18N_CTX
 
     mod_type: StringProperty()
     direction: StringProperty()
@@ -450,21 +511,23 @@ class MODIFIER_OT_panel_move(Operator):
 class MODIFIER_OT_fav_set_default(Operator):
     """把目前清單存成預設（會寫入 defaults.json，隨外掛發佈）"""
     bl_idname = "object.fav_set_default"
-    bl_label = "儲存為預設"
+    bl_label = "Save as Default"
+    bl_translation_context = I18N_CTX
 
     def execute(self, context):
         prefs = _prefs()
         base = prefs.edit_type
         DEFAULTS[base] = _working_get(prefs, base)
         _save_defaults()
-        self.report({'INFO'}, "已儲存為預設")
+        self.report({'INFO'}, _t("Saved as default"))
         return {'FINISHED'}
 
 
 class MODIFIER_OT_fav_restore_default(Operator):
     """把目前清單恢復成預設"""
     bl_idname = "object.fav_restore_default"
-    bl_label = "恢復預設"
+    bl_label = "Restore Default"
+    bl_translation_context = I18N_CTX
 
     def execute(self, context):
         prefs = _prefs()
@@ -472,14 +535,15 @@ class MODIFIER_OT_fav_restore_default(Operator):
         items = [x for x in DEFAULTS.get(base, "").split(',') if x]
         _working_set_list(prefs, base, items)
         _redraw_all()
-        self.report({'INFO'}, "已恢復成預設")
+        self.report({'INFO'}, _t("Restored to default"))
         return {'FINISHED'}
 
 
 class MODIFIER_OT_fav_clear(Operator):
     """清空目前物件類型的常用清單"""
     bl_idname = "object.fav_clear"
-    bl_label = "清空"
+    bl_label = "Clear"
+    bl_translation_context = I18N_CTX
 
     def execute(self, context):
         prefs = _prefs()
@@ -489,7 +553,8 @@ class MODIFIER_OT_fav_clear(Operator):
 
 
 class WM_MT_button_context(Menu):
-    bl_label = "新增/移除常用修改器"
+    bl_label = "Add / Remove Favorite Modifier"
+    bl_translation_context = I18N_CTX
 
     def draw(self, context):
         if not hasattr(context, 'button_operator'):
@@ -507,11 +572,11 @@ class WM_MT_button_context(Menu):
             layout.separator()
             if mod_type not in get_favorite_modifiers(context):
                 layout.operator("object.append_to_favorites",
-                                text="加入到常用修改器",
+                                text=_t("Add to Favorite Modifiers"), text_ctxt=I18N_CTX,
                                 icon='SOLO_ON').mod_type = mod_type
             else:
                 layout.operator("object.remove_from_favorites",
-                                text="從常用修改器移除",
+                                text=_t("Remove from Favorite Modifiers"), text_ctxt=I18N_CTX,
                                 icon='SOLO_ON').mod_type = mod_type
             layout.separator()
         elif "favadd_" in str(getattr(op, 'bl_rna')):
@@ -519,15 +584,15 @@ class WM_MT_button_context(Menu):
             layout = self.layout
             layout.separator()
             lop = layout.operator("object.move_favorite_modifier",
-                                  text="左移按鈕", icon='TRIA_LEFT')
+                                  text=_t("Move Button Left"), text_ctxt=I18N_CTX, icon='TRIA_LEFT')
             lop.mod_type = mod_type
             lop.direction = 'UP'
             rop = layout.operator("object.move_favorite_modifier",
-                                  text="右移按鈕", icon='TRIA_RIGHT')
+                                  text=_t("Move Button Right"), text_ctxt=I18N_CTX, icon='TRIA_RIGHT')
             rop.mod_type = mod_type
             rop.direction = 'DOWN'
             layout.operator("object.remove_from_favorites",
-                            text="從常用修改器移除",
+                            text=_t("Remove from Favorite Modifiers"), text_ctxt=I18N_CTX,
                             icon='SOLO_ON').mod_type = mod_type
             layout.separator()
 
@@ -559,7 +624,7 @@ def _make_add_op(identifier, name, description):
             else:
                 bpy.ops.object.modifier_add(type=identifier)
         except Exception:
-            self.report({'WARNING'}, "「%s」不適用於目前的物件類型" % name)
+            self.report({'WARNING'}, _t('"%s" does not apply to the current object type') % name)
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -594,7 +659,7 @@ def draw_favorite_modifiers(self, context):
     # 空狀態引導：沒有任何常用時，提示 + 一顆「＋」
     if len(mods) == 0:
         row = layout.row(align=True)
-        row.label(text="按 ＋ 加入常用修改器", icon='INFO')
+        row.label(text=_t("Press + to add a favorite modifier"), text_ctxt=I18N_CTX, icon='INFO')
         row.operator("object.add_favorite_search", text="", icon='ADD')
         return
 
@@ -660,6 +725,7 @@ def _seed_defaults():
 
 
 def register():
+    bpy.app.translations.register(__name__, translations_dict)
     for cls in classes:
         register_class(cls)
 
@@ -710,6 +776,11 @@ def unregister():
     _dynamic_add_classes.clear()
 
     DATA_PT_modifiers.remove(draw_favorite_modifiers)
+
+    try:
+        bpy.app.translations.unregister(__name__)
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":
