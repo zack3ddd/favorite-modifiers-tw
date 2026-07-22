@@ -4,19 +4,19 @@
 
 **English** · [繁體中文](#繁體中文)
 
-A row of **favorite-modifier** quick buttons at the top of Blender's modifier panel — click one to add it. This is a Traditional-Chinese localization of the original, with several added features.
+A row of favorite-modifier quick buttons at the top of Blender's modifier panel. Click one to add it. This is a Traditional-Chinese localization of the original, with several added features.
 
 > Original idea and base code from **Oleg Stepanov's** Favorite Modifiers. This is a Traditional-Chinese + extended edition, extended by Zack3D.
 
 ## Features
 
-- A row of **favorite-modifier buttons** at the top of the modifier panel — click to add that modifier
-- The favorites list is **grouped by object type** (Mesh / Curve·Text·Surface / Lattice / Grease Pencil)
+- A row of favorite-modifier buttons at the top of the modifier panel; click to add that modifier
+- The favorites list is grouped by object type (Mesh / Curve·Text·Surface / Lattice / Grease Pencil)
 - **Right-click a button:** move left / move right / remove
-- The **preferences panel** lets you edit the favorites list per object type, kept **in sync** with the on-screen buttons in real time
-- A **default list** (`defaults.json` ships with the add-on) + save as default / restore default / clear
-- Adding a modifier is **filtered by object type**, so you won't add one that doesn't apply
-- Tooltips show each modifier's **own name and description**, following the user's language
+- The preferences panel lets you edit the favorites list per object type, kept in sync with the on-screen buttons in real time
+- A default list (`defaults.json` ships with the add-on), plus save as default / restore default / clear
+- Adding a modifier is filtered by object type, so you won't add one that doesn't apply
+- Tooltips show each modifier's own name and description, following the user's language
 
 ## Installation
 
@@ -28,7 +28,7 @@ A row of **favorite-modifier** quick buttons at the top of Blender's modifier pa
 
 ## Usage
 
-- Select an object, and the favorite buttons appear at the top of its modifier panel — click to add that modifier
+- Select an object, and the favorite buttons appear at the top of its modifier panel; click to add that modifier
 - When there are no favorites yet, a "press ＋ to add a favorite modifier" prompt is shown
 - **Right-click** a favorite button → move left / move right / remove
 - In Preferences you can edit the list per object type and manage defaults (save as default / restore default / clear)
@@ -52,13 +52,13 @@ This is an extended / Traditional-Chinese edition; copyright and license follow 
 
 ## 功能
 
-- 修改器面板上方一排**常用修改器按鈕**，點擊即加入該修改器
-- 常用清單**依物件類型分組**（網格 / 曲線·文字·曲面 / 晶格 / 蠟筆）
+- 修改器面板上方一排常用修改器按鈕，點擊即加入該修改器
+- 常用清單依物件類型分組（網格 / 曲線·文字·曲面 / 晶格 / 蠟筆）
 - **右鍵按鈕**：左移 / 右移 / 移除
-- **偏好面板**可依物件類型直接編輯常用清單，並與介面按鈕**即時同步**
-- **預設清單**（`defaults.json` 隨外掛一起發佈）＋ 儲存為預設 / 恢復預設 / 清空
-- 加入修改器時**依物件類型過濾**，避免加到不適用的
-- tooltip 顯示各修改器**自己的名稱與說明**，跟隨使用者語系
+- 偏好面板可依物件類型直接編輯常用清單，並與介面按鈕即時同步
+- 預設清單（`defaults.json` 隨外掛一起發佈），另有儲存為預設 / 恢復預設 / 清空
+- 加入修改器時依物件類型過濾，避免加到不適用的
+- tooltip 顯示各修改器自己的名稱與說明，跟隨使用者語系
 
 ## 安裝教學
 
