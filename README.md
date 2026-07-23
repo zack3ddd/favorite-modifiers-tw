@@ -62,7 +62,7 @@ This is an extended / Traditional-Chinese edition; copyright and license follow 
 
 ## 教學
 
-[![YouTube 影片](https://img.youtube.com/vi/DnObyyDxqME/maxresdefault.jpg)](https://www.youtube.com/watch?v=DnObyyDxqME)
+[![YouTube 影片](https://img.youtube.com/vi/DnObyyDxqME/sddefault.jpg)](https://www.youtube.com/watch?v=DnObyyDxqME)
 
 ## 安裝教學
 
