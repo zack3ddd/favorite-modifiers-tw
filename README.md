@@ -60,6 +60,10 @@ This is an extended / Traditional-Chinese edition; copyright and license follow 
 - 加入修改器時依物件類型過濾，避免加到不適用的
 - tooltip 顯示各修改器自己的名稱與說明，跟隨使用者語系
 
+## 教學
+
+[![YouTube 影片](https://img.youtube.com/vi/DnObyyDxqME/maxresdefault.jpg)](https://www.youtube.com/watch?v=DnObyyDxqME)
+
 ## 安裝教學
 
 1. 到本頁右側 **Releases** 下載最新的 `.zip`（不用解壓縮）
